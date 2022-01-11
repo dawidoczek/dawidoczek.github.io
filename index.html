@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  	<title>DUNGEON CRAWLER</title>
+  </head>
+
+  <body><div id="asety">
+  <img src="wall.png" id="sciana">
+<img src="plansza3.png" id="plansza">
+<img src="up.png" id="up">
+<img src="down.png" id="down">
+<img src="left.png" id="left">
+<img src="right.png" id="right">
+<img src="up2.png" id="up2">
+<img src="down2.png" id="down2">
+<img src="left2.png" id="left2">
+<img src="right2.png" id="right2">
+<img src="bomb1.png" id="bomb1">
+<img src="bomb2.png" id="bomb2">
+<img src="bomb3.png" id="bomb3">
+  </div>
+ <p id="dev1"> </p>
+ <p id="dev2"> </p>
+  <p id="dev3"> </p>
+ <p id="dev4"> </p>
+ <p id="dev5"> </p>
+ <div id="punkty">
+ <p id="wynik">czas: 0</p>
+ <p id="wynik2">punkty 1: 0</p>
+ <p id="wynik3">punkty 2: 0</p>
+ </div>
+    <canvas id="pole" width="750px" height="650"></canvas>
+	
+	<div id="kolorki" class="twoj_stary">
+	<input type="radio"  name="kolor"> Red <br>
+	<input type="radio"  name="kolor"> Green<br>
+	<input type="radio"  name="kolor"> Blue<br>
+	<input type="radio"  name="kolor"> White<br>
+	<input type="radio"  name="kolor"> losowe<br>
+	</div>
+	<div class="twoj_stary" id="guziory">
+	
+
+
+	
+	
+</div>
+     <style>
+	 #dev1{
+	 visibility:hidden;
+	 }
+	 #dev2{
+	 visibility:hidden;
+	 }
+	 #dev3{
+	 visibility:hidden;
+	 }
+	 #dev4{
+	 visibility:hidden;
+	 }
+	  #dev5{
+	 visibility:hidden;
+	 }
+	 .twoj_stary{
+	 visibility:hidden;
+	 }
+	 #asety{
+	 position:absolute;
+	 top:0;
+	 bottom:0;	
+	 visibility:hidden;	
+	 }
+	 #punkty{
+	 font-size:24px;
+	 
+	 
+	 }
+      #pole {
+	  
+        position: absolute;
+        top: 40%;
+        left: 50%;
+		transform: translate(-50%, -50%);
+      }
+	  #guziory{
+	  visibility:hidden;
+	  position: absolute;
+	  top 70%;
+	  left: 50%;
+	  margin-top:50%;
+	  transform: translate(-50%, -50%);
+	  
+	  
+	  
+	  }
+	  #kolorki{
+	  position:absolute;
+	  top: 20%;
+	  left:15%;
+	  }
+	  
+    
+    </style>
+  </body>
+
+  <script>
+  bomba_osoba=1
+  bomba_czas=0
+  czas=0
+  pkt1=0
+  pkt2=0
+  pkt1=parseInt(pkt1)
+    punkty1=9
+  punkty1=parseInt(punkty1)
+  kolor_zioma="transparent";
+  tylda=0
+  str=""
+  i=0
+  i2=0
+  x=650
+  y=550
+  x2=50
+  y2=50
+  bx=50
+  by=50
+  tablica1=[]
+  tablica2=[]
+  tablica3=[]
+  const kolor=document.getElementsByName("kolor");
+  
+  const ziomek_gora=document.getElementById("up");
+  const ziomek_gora2=document.getElementById("down2");
+  stroj_zioma2=ziomek_gora2;
+    var stroj_zioma=document.getElementById("down");
+  
+  var can = document.getElementById("pole");
+   var ctx = can.getContext("2d");
+   var sciana=document.getElementById("sciana");
+   var bomba=document.getElementById("bomb1")
+   
+   function losowe(){
+   i=0;
+   while(i<20)
+	{
+   	ran1=Math.floor(Math.random()*(14));
+	ran2=Math.floor(Math.random()*(12));
+	//PAMIĘTAJ ZEBY ZROBIĆ ZEBY NA OBRZEŻACH TEZ SIE MOGŁO RESPIC
+	if(ran1<=1){
+	ran1+=2;
+	}
+	if(ran2<=1){
+	ran2+=2;
+	}
+	if(ran1>=13){
+	ran1-=2;
+	}
+	if(ran2>=11){
+	ran2-=2;
+	}
+	
+	ran1=ran1*50;
+	ran2=ran2*50;
+	if(ran1%100==0 && ran2%100==0){
+	ran1+=50;
+	
+	}
+	
+	tablica1[i]=ran1;
+	tablica2[i]=ran2;
+	str+="x:"+tablica1[i]+" i y:"+tablica2[i]+"+";
+	i++;
+	}
+	  }
+	losowe();
+   
+   
+	
+ 
+  
+  
+  
+  
+document.addEventListener("keyup", function(event) {
+    if (event.keyCode === 39) {
+	x+=50;
+	stroj_zioma=document.getElementById("right");
+	dy=0;
+	dx=-50;
+    }
+	if (event.keyCode === 37) {
+	x-=50;
+	stroj_zioma=document.getElementById("left");
+	dy=0;
+	dx=50;
+    }
+	 if (event.keyCode === 38) {
+	y-=50;
+	stroj_zioma=document.getElementById("up");
+	dy=50;
+	dx=0;
+    }
+	 if (event.keyCode === 40) {
+	y+=50;
+	stroj_zioma=document.getElementById("down");
+	dy=-50;
+	dx=0;
+	    }	
+    if (event.keyCode === 68) {
+	x2+=50;
+	stroj_zioma2=document.getElementById("right2");
+	dy2=0;
+	dx2=-50;
+    }
+	if (event.keyCode === 65) {
+	x2-=50;
+	stroj_zioma2=document.getElementById("left2");
+	dy2=0;
+	dx2=50;
+    }
+	 if (event.keyCode === 87) {
+	y2-=50;
+	stroj_zioma2=document.getElementById("up2");
+	dy2=50;
+	dx2=0;
+    }
+	 if (event.keyCode === 83) {
+	y2+=50;
+	stroj_zioma2=document.getElementById("down2");
+	dy2=-50;
+	dx2=0;
+	 }
+});
+		
+		
+		
+
+	function sciany(){
+	
+ctx.drawImage(sciana,tablica1[0],tablica2[0]);
+ctx.drawImage(sciana,tablica1[1],tablica2[1]);
+ctx.drawImage(sciana,tablica1[2],tablica2[2]);
+ctx.drawImage(sciana,tablica1[3],tablica2[3]);
+ctx.drawImage(sciana,tablica1[4],tablica2[4]);
+ctx.drawImage(sciana,tablica1[5],tablica2[5]);
+ctx.drawImage(sciana,tablica1[6],tablica2[6]);
+ctx.drawImage(sciana,tablica1[7],tablica2[7]);
+ctx.drawImage(sciana,tablica1[8],tablica2[8]);
+ctx.drawImage(sciana,tablica1[9],tablica2[9]);
+ctx.drawImage(sciana,tablica1[10],tablica2[10]);
+ctx.drawImage(sciana,tablica1[11],tablica2[11]);
+ctx.drawImage(sciana,tablica1[12],tablica2[12]);
+ctx.drawImage(sciana,tablica1[13],tablica2[13]);
+ctx.drawImage(sciana,tablica1[14],tablica2[14]);
+ctx.drawImage(sciana,tablica1[15],tablica2[15]);
+ctx.drawImage(sciana,tablica1[16],tablica2[16]);
+ctx.drawImage(sciana,tablica1[17],tablica2[17]);
+ctx.drawImage(sciana,tablica1[18],tablica2[18]);
+ctx.drawImage(sciana,tablica1[19],tablica2[19]);
+ctx.drawImage(sciana,tablica1[20],tablica2[20]);
+ctx.drawImage(sciana,tablica1[21],tablica2[21]);
+ctx.drawImage(sciana,tablica1[22],tablica2[22]);
+ctx.drawImage(sciana,tablica1[23],tablica2[23]);
+ctx.drawImage(sciana,tablica1[24],tablica2[24]);
+ctx.drawImage(sciana,tablica1[25],tablica2[25]);
+ctx.drawImage(sciana,tablica1[26],tablica2[26]);
+ctx.drawImage(sciana,tablica1[27],tablica2[27]);
+ctx.drawImage(sciana,tablica1[28],tablica2[28]);
+ctx.drawImage(sciana,tablica1[29],tablica2[29]);
+}
+
+  function dzialaj_bo_ci_zajebe(){
+  
+  if(x==tablica1[0] && y==tablica2[0]){
+
+ x+=dx;
+ y+=dy;
+  }
+  if(x==tablica1[1] && y==tablica2[1]){
+
+ x+=dx;
+ y+=dy;
+  }
+  if(x==tablica1[2] && y==tablica2[2]){
+
+ x+=dx;
+ y+=dy;
+  }
+  if(x==tablica1[3] && y==tablica2[3]){
+
+ x+=dx;
+ y+=dy;
+  }
+  if(x==tablica1[4] && y==tablica2[4]){
+
+ x+=dx;
+ y+=dy;
+  }
+  if(x==tablica1[5] && y==tablica2[5]){
+
+ x+=dx;
+ y+=dy;
+  }
+  if(x==tablica1[6] && y==tablica2[6]){
+
+ x+=dx;
+ y+=dy;
+  }
+  if(x==tablica1[7] && y==tablica2[7]){
+
+ x+=dx;
+ y+=dy;
+  }
+  if(x==tablica1[8] && y==tablica2[8]){
+
+ x+=dx;
+ y+=dy;
+  }
+  if(x==tablica1[9] && y==tablica2[9]){
+
+ x+=dx;
+ y+=dy;
+  }
+   if(x==tablica1[10] && y==tablica2[10]){
+
+ x+=dx;
+ y+=dy;
+  }
+  if(x==tablica1[11] && y==tablica2[11]){
+
+ x+=dx;
+ y+=dy;
+  }
+  if(x==tablica1[12] && y==tablica2[12]){
+
+ x+=dx;
+ y+=dy;
+  }
+  if(x==tablica1[13] && y==tablica2[13]){
+
+ x+=dx;
+ y+=dy;
+  }
+  if(x==tablica1[14] && y==tablica2[14]){
+
+ x+=dx;
+ y+=dy;
+  }
+  if(x==tablica1[15] && y==tablica2[15]){
+
+ x+=dx;
+ y+=dy;
+  }
+  if(x==tablica1[16] && y==tablica2[16]){
+
+ x+=dx;
+ y+=dy;
+  }
+  if(x==tablica1[17] && y==tablica2[17]){
+
+ x+=dx;
+ y+=dy;
+  }
+  if(x==tablica1[18] && y==tablica2[18]){
+
+ x+=dx;
+ y+=dy;
+  }
+  if(x==tablica1[19] && y==tablica2[19]){
+
+ x+=dx;
+ y+=dy;
+  }
+    if(x==tablica1[20] && y==tablica2[20]){
+
+ x+=dx;
+ y+=dy;
+  }
+  if(x==tablica1[21] && y==tablica2[21]){
+
+ x+=dx;
+ y+=dy;
+  }
+  if(x==tablica1[22] && y==tablica2[22]){
+
+ x+=dx;
+ y+=dy;
+  }
+  if(x==tablica1[23] && y==tablica2[23]){
+
+ x+=dx;
+ y+=dy;
+  }
+  if(x==tablica1[24] && y==tablica2[24]){
+
+ x+=dx;
+ y+=dy;
+  }
+  if(x==tablica1[25] && y==tablica2[25]){
+
+ x+=dx;
+ y+=dy;
+  }
+  if(x==tablica1[26] && y==tablica2[26]){
+
+ x+=dx;
+ y+=dy;
+  }
+  if(x==tablica1[27] && y==tablica2[27]){
+
+ x+=dx;
+ y+=dy;
+  }
+  if(x==tablica1[28] && y==tablica2[28]){
+
+ x+=dx;
+ y+=dy;
+  }
+  if(x==tablica1[29] && y==tablica2[29]){
+
+ x+=dx;
+ y+=dy;
+  }
+  
+  
+  }
+  function dzialaj_bo_ci_zajebe2(){
+  
+  if(x2==tablica1[0] && y2==tablica2[0]){
+
+ x2+=dx2;
+ y2+=dy2;
+  }
+  if(x2==tablica1[1] && y2==tablica2[1]){
+
+ x2+=dx2;
+ y2+=dy2;
+  }
+  if(x2==tablica1[2] && y2==tablica2[2]){
+
+ x2+=dx2;
+ y2+=dy2;
+  }
+  if(x2==tablica1[3] && y2==tablica2[3]){
+
+ x2+=dx2;
+ y2+=dy2;
+  }
+  if(x2==tablica1[4] && y2==tablica2[4]){
+
+ x2+=dx2;
+ y2+=dy2;
+  }
+  if(x2==tablica1[5] && y2==tablica2[5]){
+
+ x2+=dx2;
+ y2+=dy2;
+  }
+  if(x2==tablica1[6] && y2==tablica2[6]){
+
+ x2+=dx2;
+ y2+=dy2;
+  }
+  if(x2==tablica1[7] && y2==tablica2[7]){
+
+ x2+=dx2;
+ y2+=dy2;
+  }
+  if(x2==tablica1[8] && y2==tablica2[8]){
+
+ x2+=dx2;
+ y2+=dy2;
+  }
+  if(x2==tablica1[9] && y2==tablica2[9]){
+
+ x2+=dx2;
+ y2+=dy2;
+  }
+  if(x2==tablica1[10] && y2==tablica2[10]){
+
+ x2+=dx2;
+ y2+=dy2;
+  }
+  if(x2==tablica1[11] && y2==tablica2[11]){
+
+ x2+=dx2;
+ y2+=dy2;
+  }
+  if(x2==tablica1[12] && y2==tablica2[12]){
+
+ x2+=dx2;
+ y2+=dy2;
+  }
+  if(x2==tablica1[13] && y2==tablica2[13]){
+
+ x2+=dx2;
+ y2+=dy2;
+  }
+  if(x2==tablica1[14] && y2==tablica2[14]){
+
+ x2+=dx2;
+ y2+=dy2;
+  }
+  if(x2==tablica1[15] && y2==tablica2[15]){
+
+ x2+=dx2;
+ y2+=dy2;
+  }
+  if(x2==tablica1[16] && y2==tablica2[16]){
+
+ x2+=dx2;
+ y2+=dy2;
+  }
+  if(x2==tablica1[17] && y2==tablica2[17]){
+
+ x2+=dx2;
+ y2+=dy2;
+  }
+  if(x2==tablica1[18] && y2==tablica2[18]){
+
+ x2+=dx2;
+ y2+=dy2;
+  }
+  if(x2==tablica1[19] && y2==tablica2[19]){
+
+ x2+=dx2;
+ y2+=dy2;
+  }
+  if(x2==tablica1[20] && y2==tablica2[20]){
+
+ x2+=dx2;
+ y2+=dy2;
+  }
+  if(x2==tablica1[21] && y2==tablica2[21]){
+
+ x2+=dx2;
+ y2+=dy2;
+  }
+  if(x2==tablica1[22] && y2==tablica2[22]){
+
+ x2+=dx2;
+ y2+=dy2;
+  }
+  if(x2==tablica1[23] && y2==tablica2[23]){
+
+ x2+=dx2;
+ y2+=dy2;
+  }
+  if(x2==tablica1[24] && y2==tablica2[24]){
+
+ x2+=dx2;
+ y2+=dy2;
+  }
+  if(x2==tablica1[25] && y2==tablica2[25]){
+
+ x2+=dx2;
+ y2+=dy2;
+  }
+  if(x2==tablica1[26] && y2==tablica2[26]){
+
+ x2+=dx2;
+ y2+=dy2;
+  }
+  if(x2==tablica1[27] && y2==tablica2[27]){
+
+ x2+=dx2;
+ y2+=dy2;
+  }
+  if(x2==tablica1[28] && y2==tablica2[28]){
+
+ x2+=dx2;
+ y2+=dy2;
+  }
+  if(x2==tablica1[29] && y2==tablica2[29]){
+
+ x2+=dx2;
+ y2+=dy2;
+  }
+  
+  
+  }
+  function dwa(){
+   
+   
+	if(x2<=0){
+   x2+=50;
+   }
+    if(y2<=0){
+   y2+=50;
+   }
+   if(x2>=700){
+   x2+=-50;
+   }
+    if(y2>=600){
+   y2+=-50;
+   }
+ 
+   if(x2%100==0 && y2%100==0){
+  x2+=dx2;
+  y2+=dy2;
+}   
+    ctx.drawImage(stroj_zioma2,x2,y2,50,50)
+   
+   }
+
+  
+
+	
+
+document.addEventListener("keyup", function(event) {
+    if (event.keyCode === 192) {
+		if(tylda==0){
+document.getElementById("dev1").style="visibility:visible;"
+document.getElementById("dev2").style="visibility:visible;"
+document.getElementById("dev3").style="visibility:visible;"
+document.getElementById("dev4").style="visibility:visible;"
+document.getElementById("dev5").style="visibility:visible;"
+tylda++    }
+	
+else{
+document.getElementById("dev1").style="visibility:hidden;"
+document.getElementById("dev2").style="visibility:hidden;"
+document.getElementById("dev3").style="visibility:hidden;"
+document.getElementById("dev4").style="visibility:hidden;"
+document.getElementById("dev5").style="visibility:hidden;"
+
+
+tylda--
+}
+	
+	
+	
+	}
+});
+	 
+      
+
+   function main(){
+  
+   
+   window.setInterval(function onTick() {
+document.getElementById("dev1").innerHTML="x: "+x;
+document.getElementById("dev2").innerHTML="y: "+y;
+document.getElementById("dev3").innerHTML="x2: "+x2;
+document.getElementById("dev4").innerHTML="y2: "+y2;
+document.getElementById("dev5").innerHTML="czas: "+bomba_czas;
+
+
+    img=document.getElementById("plansza");
+   ctx.drawImage(img,0,0);
+    
+   if(x<=0){
+   x+=50;
+   }
+    if(y<=0){
+   y+=50;
+   }
+   if(x>=700){
+   x+=-50;
+   }
+    if(y>=600){
+   y+=-50;
+   }
+ 
+   if(x%100==0 && y%100==0){
+  x+=dx;
+  y+=dy;
+}   
+sciany();
+dzialaj_bo_ci_zajebe();
+dzialaj_bo_ci_zajebe2();
+
+ if(bomba_osoba %2==0){
+ bx=x
+ by=y
+ }
+ else{
+ bx=x2
+ by=y2
+  }
+  dwa();
+   ctx.drawImage(stroj_zioma,x,y,50,50)
+ ctx.drawImage(bomba,bx,by) 
+
+
+ 
+ 
+ 
+bomba_czas++;
+if (bomba_czas==200){
+bomba=document.getElementById("bomb2")
+} 
+if (bomba_czas==400){
+bomba=document.getElementById("bomb3")
+} 
+  if(bomba_czas>=600){
+  bomba_osoba=Math.floor(Math.random()*2)+1
+  bomba_czas=0;
+  x=650
+  y=550
+  x2=50
+  y2=50
+  losowe();
+  bomba=document.getElementById("bomb1")
+  if(bomba_osoba%2==0){
+  
+  pkt1++
+  document.getElementById("wynik2").innerHTML="punkty 1: "+pkt1;
+  
+  }
+  else{
+
+ pkt2++
+document.getElementById("wynik3").innerHTML="punkty 2: "+pkt2;  
+  }
+  }
+  if(x2==x && y2==y){
+  
+  czas++;
+
+  }
+ if(x2==x && y2==y && czas>=30){
+ bomba_osoba++
+ bomba_czas=0
+ czas=20
+ bomba=document.getElementById("bomb1")
+ 
+
+ }
+ if(x2!=x || y2!=y)
+ {
+ czas=0;
+   }
+   if(bomba_czas==0){
+ punkty1=10;
+ }
+ document.getElementById("wynik").innerHTML="czas: "+punkty1;  
+  } ,10)
+   
+  }
+  window.setInterval(function onTick() {
+  punkty1=punkty1-1;
+   }
+  ,1000)
+  
+  
+    main();
+	
+    
+   
+   
+  </script>
+</html>
