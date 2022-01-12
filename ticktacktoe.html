@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  	<title>paint przeglądarkowy</title>
+    <style>
+	 #dev{
+     position: absolute;
+    
+     visibility: show;}
+
+   
+	 
+	 #pole{
+	 border: 1px solid black;
+	  padding:-1px;
+     
+           position: absolute;
+           top: 45%;
+           left: 24%;
+           right: 20%;
+       transform: translate(-10%, -50%);
+	 }
+
+         #pole {
+       margin-bottom:-3px;
+         }
+       #guziory{
+       visibility:hidden;
+       position: absolute;
+       top: 70%;
+       left: 40%;
+       margin-top:50%;
+       transform: translate(-50%, -50%);
+       
+       
+       
+       }
+
+input{
+  height: 50px;
+     width: 100px;
+}
+
+
+
+       #kolorki{
+       position:absolute;
+       top: 20%;
+       left:10%;
+       }
+       
+       
+       </style>
+  </head>
+  <div id="dev"></div><br>
+  <body><div id="dupa">
+    <canvas id="pole" width="300px" height="300px"> </canvas><br>
+   
+    <div id="gracz">Tura Gracz X</div>
+    <input type="button" value="reset" onClick="document.location.reload(true)">
+	</div>
+
+
+ 
+	
+	 </body>
+
+  <script>
+  				i=0
+          var tablica=
+        [ [[0], [0],[0]],
+          [[0], [0],[0]],
+          [[0], [0],[0]] ];
+          
+      var wygrana1=[1,1,1];
+      var wygrana2=[2,2,2];
+     
+    
+      
+         
+         rysowanie=0
+    koniec=0	
+dwa=2
+pi=100
+ 
+  x=0
+  y=0
+  px=50
+  py=50
+    kolor="black"
+	wybor = document.getElementsByName("kolor")
+	losuj = document.getElementById("losuj")	
+  
+   var can = document.getElementById("pole")
+   var ctx = can.getContext("2d"); 
+function getCursorPosition(canvas, event) {
+  const rect = canvas.getBoundingClientRect()
+    var px = event.clientX - rect.left
+    var py = event.clientY - rect.top
+      var ctx = canvas.getContext("2d");
+   px=Math.round(px)
+   py=Math.round(py)
+  
+    while(px%pi!=0){
+    px++
+    }
+    while(py%pi!=0){
+    py++
+    }
+   x=px
+   y=py
+x2=x-50
+y2=y-50
+pktx=(x/100)-1
+pkty=(y/100)-1
+ctx.fillStyle = kolor;
+
+      
+	
+}
+const canvas2 = document.querySelector('canvas')
+canvas2.addEventListener('mousedown', function(e) {
+    getCursorPosition(canvas2, e)
+    
+    
+  
+ 
+    
+       if(tablica[pkty][pktx]!=1 && tablica[pkty][pktx]!=2)
+    {
+      
+  if(dwa%2==0 && rysowanie==0){
+    document.getElementById("gracz").innerHTML="Tura gracza O"
+    tablica[pkty][pktx]=1
+        ctx.beginPath()
+       
+        ctx.moveTo(x2-40, y2-40);
+        ctx.lineTo(x2+40, y2+40)
+        ctx.moveTo(x2+40, y2-40);
+        ctx.lineTo(x2-40, y2+40)
+        
+      
+        ctx.stroke();
+        ctx.closePath();
+        
+		    
+		    
+		    }
+else if(rysowanie==0){
+  tablica[pkty][pktx]=2
+  document.getElementById("gracz").innerHTML="Tura gracza X"
+		    ctx.beginPath()
+		    ctx.arc(x2,y2,50,0,2*Math.PI);
+		    ctx.stroke()
+		    ctx.closePath()
+      
+}   
+		     
+		    dwa++
+   
+
+
+
+
+		    }
+        else{
+        
+        }
+		    
+		    }
+		    
+   
+)
+canvas2.addEventListener('mouseup', function(e){
+
+
+wygranacheck();
+        
+       
+
+
+
+document.getElementById("dev").innerHTML=tablica
+
+})
+
+function wygranacheck(){
+  tab=tablica;
+            wyg1=wygrana1;
+            wyg2=wygrana2;
+           
+            tab=JSON.stringify(tab);
+            wyg1=JSON.stringify(wyg1);
+            wyg2=JSON.stringify(wyg2);
+          
+           
+           var win1 = tab.indexOf(wyg1);
+               win2 = tab.indexOf(wyg2);
+           
+           if(win1!=-1){
+              
+              koniec=1
+           }  
+           if(win2!=-1){
+              
+              koniec=2
+           }  
+          poprzecznie()
+           
+
+
+}
+function poprzecznie(){
+
+           if(tablica[0][0]==1 && tablica[1][0]==1 && tablica[2][0]==1 ){
+    
+     koniec=1
+      }
+      if(tablica[0][1]==1 && tablica[1][1]==1 && tablica[2][1]==1 ){
+    
+     koniec=1
+      }
+      if(tablica[0][2]==1 && tablica[1][2]==1 && tablica[2][2]==1 ){
+    
+     koniec=1
+      }
+      if(tablica[0][0]==2 && tablica[1][0]==2 && tablica[2][0]==2 ){
+     
+     koniec=2
+      }
+      if(tablica[0][1]==2 && tablica[1][1]==2 && tablica[2][1]==2 ){
+     
+     koniec=2
+      }
+      if(tablica[0][2]==2 && tablica[1][2]==2 && tablica[2][2]==2 ){
+     
+     koniec=2
+      }
+      if(tablica[0][0]==1 && tablica[1][1]==1 && tablica[2][2]==1){
+     
+      koniec=1
+      }
+      if(tablica[0][0]==2 && tablica[1][1]==2 && tablica[2][2]==2){
+      
+      koniec=2
+      }
+    }
+   
+   
+   window.setInterval(function czy_koniec(){
+    if(koniec==1){
+  koniec=0
+  rysowanie=1
+  
+  document.getElementById("gracz").innerHTML="Wygrał Gracz X"
+    }
+    if(koniec==2){
+  koniec=0
+  rysowanie=1
+  document.getElementById("gracz").innerHTML="Wygrał Gracz O"
+    }
+  },10)
+
+
+
+  function reset(){
+    var tablica=
+        [ [[0], [0],[0]],
+          [[0], [0],[0]],
+          [[0], [0],[0]] ];
+    
+
+
+  }
+    </script>
+    </body>
+    </html>
