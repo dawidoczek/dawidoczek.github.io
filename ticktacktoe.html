@@ -2,14 +2,21 @@
 <html>
   <head>
   <meta charset="utf-8">
-  	<title>paint przeglądarkowy</title>
+  	<title>Kółko i krzyżyk</title>
     <style>
 	 #dev{
      position: absolute;
     
-     visibility: show;}
+     visibility: hidden;}
 
+<<<<<<< HEAD
    
+     #gracz{
+=======
+   #gracz{
+>>>>>>> 466d2f1061212e72fdf8996cb6be96d3e37cdc40
+	   font-size: 44px;
+	    }
 	 
 	 #pole{
 	 border: 1px solid black;
@@ -94,6 +101,19 @@ pi=100
   
    var can = document.getElementById("pole")
    var ctx = can.getContext("2d"); 
+
+ctx.beginPath()
+ctx.moveTo(100,300)
+ctx.lineTo(100,0)
+ctx.moveTo(200,300)
+ctx.lineTo(200,0)
+ctx.moveTo(0,100)
+ctx.lineTo(300,100)
+ctx.moveTo(0,200)
+ctx.lineTo(300,200)
+ctx.stroke()
+ctx.closePath()
+
 function getCursorPosition(canvas, event) {
   const rect = canvas.getBoundingClientRect()
     var px = event.clientX - rect.left
@@ -151,7 +171,7 @@ else if(rysowanie==0){
   tablica[pkty][pktx]=2
   document.getElementById("gracz").innerHTML="Tura gracza X"
 		    ctx.beginPath()
-		    ctx.arc(x2,y2,50,0,2*Math.PI);
+		    ctx.arc(x2,y2,45,0,2*Math.PI);
 		    ctx.stroke()
 		    ctx.closePath()
       
@@ -245,6 +265,18 @@ function poprzecznie(){
       
       koniec=2
       }
+<<<<<<< HEAD
+      if(tablica[0][2]==1 && tablica[1][1]==1 && tablica[2][0]==1){
+=======
+	if(tablica[0][2]==1 && tablica[1][1]==1 && tablica[2][0]==1){
+>>>>>>> 466d2f1061212e72fdf8996cb6be96d3e37cdc40
+     
+     koniec=1
+     }
+     if(tablica[0][2]==2 && tablica[1][1]==2 && tablica[2][0]==2){
+     
+     koniec=2
+     }
     }
    
    
