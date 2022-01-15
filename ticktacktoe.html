@@ -60,7 +60,7 @@ input{
   <body><div id="dupa">
     <canvas id="pole" width="300px" height="300px"> </canvas><br>
    
-    <div id="gracz">Tura Gracz X</div>
+    <div id="gracz"></div>
     <input type="button" value="reset" onClick="document.location.reload(true)">
 	</div>
 
@@ -70,21 +70,41 @@ input{
 	 </body>
 
   <script>
+       var can = document.getElementById("pole")
+   var ctx = can.getContext("2d");
   				i=0
           var tablica=
-        [ [[0], [0],[0]],
-          [[0], [0],[0]],
-          [[0], [0],[0]] ];
-          
-      var wygrana1=[1,1,1];
-      var wygrana2=[2,2,2];
-     
-    
+        [ ["", "",""],
+          ["", "",""],
+          ["", "",""] ];
+         tablica2=
+        [["X","X","X"],
+         ["X","X","O"],
+         ["X","X","O"]]
+      var wygrana1=["X","X","X"];
+      var wygrana2=["O","O","O"];
+
+
+
+
+
       
-         
-         rysowanie=0
+  
+    move=0
+ 
+         bestScore=-100 
+         rysowanie=1
     koniec=0	
-dwa=2
+ruch_gracza=Math.floor(Math.random()*2)
+if(ruch_gracza==1){
+  document.getElementById("gracz").innerHTML="Ruch gracza O"
+
+
+}
+else{
+  document.getElementById("gracz").innerHTML="Ruch gracza X"
+}
+
 pi=100
  
   x=0
@@ -95,9 +115,8 @@ pi=100
 	wybor = document.getElementsByName("kolor")
 	losuj = document.getElementById("losuj")	
   
-   var can = document.getElementById("pole")
-   var ctx = can.getContext("2d"); 
-
+ function clear(){
+  ctx.clearRect(0, 0, can.width, can.height);
 ctx.beginPath()
 ctx.moveTo(100,300)
 ctx.lineTo(100,0)
@@ -109,7 +128,40 @@ ctx.moveTo(0,200)
 ctx.lineTo(300,200)
 ctx.stroke()
 ctx.closePath()
-
+ }
+ clear()
+ function draw(){
+      for(i=0;i<3;i++){
+    for(j=0;j<3;j++){
+      i2=i
+      j2=j
+      
+      i2=i2*100
+      j2=j2*100
+      i2=i2+50
+      j2=j2+50
+    if(tablica[i][j]=="X"){
+      
+      ctx.beginPath()
+       
+       ctx.moveTo(j2-40, i2-40);
+       ctx.lineTo(j2+40, i2+40)
+       ctx.moveTo(j2+40, i2-40);
+       ctx.lineTo(j2-40, i2+40)
+       
+     
+       ctx.stroke();
+       ctx.closePath();
+     }
+    if(tablica[i][j]=="O"){
+      ctx.beginPath()
+		    ctx.arc(j2,i2,45,0,2*Math.PI);
+		    ctx.stroke()
+		    ctx.closePath()
+    }
+    }
+  }
+}
 function getCursorPosition(canvas, event) {
   const rect = canvas.getBoundingClientRect()
     var px = event.clientX - rect.left
@@ -138,65 +190,53 @@ ctx.fillStyle = kolor;
 const canvas2 = document.querySelector('canvas')
 canvas2.addEventListener('mousedown', function(e) {
     getCursorPosition(canvas2, e)
-    
-    
   
- 
     
-       if(tablica[pkty][pktx]!=1 && tablica[pkty][pktx]!=2)
+    
+
+    
+       if(tablica[pkty][pktx]=="")
     {
       
-  if(dwa%2==0 && rysowanie==0){
+      
+  if(ruch_gracza==0 && rysowanie==1){
     document.getElementById("gracz").innerHTML="Tura gracza O"
-    tablica[pkty][pktx]=1
-        ctx.beginPath()
-       
-        ctx.moveTo(x2-40, y2-40);
-        ctx.lineTo(x2+40, y2+40)
-        ctx.moveTo(x2+40, y2-40);
-        ctx.lineTo(x2-40, y2+40)
-        
-      
-        ctx.stroke();
-        ctx.closePath();
-        
-		    
-		    
-		    }
-else if(rysowanie==0){
-  tablica[pkty][pktx]=2
-  document.getElementById("gracz").innerHTML="Tura gracza X"
-		    ctx.beginPath()
-		    ctx.arc(x2,y2,45,0,2*Math.PI);
-		    ctx.stroke()
-		    ctx.closePath()
-      
+    tablica[pkty][pktx]="X"
+ }
+if(ruch_gracza==1 && rysowanie==1){
+  //najlepszyRuch()
+  tablica[pkty][pktx]="O"
+   document.getElementById("gracz").innerHTML="Tura gracza X"
+
+     
 }   
-		     
-		    dwa++
-   
+clear();
+draw();
+		 if(ruch_gracza==1){
+       ruch_gracza=0
+     }
+     else{
+       ruch_gracza=1
+      }
+   var ileX= find("X",tablica)
+   var ileO= find("O",tablica)
+   suma=ileX.length+ileO.length
+  if(suma==9){
+    koniec=3
+  }
 
 
 
 
 		    }
-        else{
-        
-        }
+       
 		    
 		    }
 		    
    
 )
 canvas2.addEventListener('mouseup', function(e){
-
-
 wygranacheck();
-        
-       
-
-
-
 document.getElementById("dev").innerHTML=tablica
 
 })
@@ -227,45 +267,46 @@ function wygranacheck(){
 
 
 }
-function poprzecznie(){
 
-           if(tablica[0][0]==1 && tablica[1][0]==1 && tablica[2][0]==1 ){
-    
-     koniec=1
-      }
-      if(tablica[0][1]==1 && tablica[1][1]==1 && tablica[2][1]==1 ){
-    
-     koniec=1
-      }
-      if(tablica[0][2]==1 && tablica[1][2]==1 && tablica[2][2]==1 ){
-    
-     koniec=1
-      }
-      if(tablica[0][0]==2 && tablica[1][0]==2 && tablica[2][0]==2 ){
-     
-     koniec=2
-      }
-      if(tablica[0][1]==2 && tablica[1][1]==2 && tablica[2][1]==2 ){
-     
-     koniec=2
-      }
-      if(tablica[0][2]==2 && tablica[1][2]==2 && tablica[2][2]==2 ){
-     
-     koniec=2
-      }
-      if(tablica[0][0]==1 && tablica[1][1]==1 && tablica[2][2]==1){
+function poprzecznie(){
+  mecz=0
+  mecz2=0
+  for(j4=0;j4<3;j4++){
+  for(i4=0;i4<3;i4++){
+  
+  if(tablica[i4][j4]=='X'){
+  mecz++
+  }
+  if(tablica[i4][j4]=='O'){
+    mecz2++
+  }
+   if(mecz==3){
+   koniec=1
+  }
+  if(mecz2==3){
+    koniec=2
+  }
+   }
+    mecz=0
+    mecz2=0
+  }
+      if(tablica[0][0]=="X" && tablica[1][1]=="X" && tablica[2][2]=="X"){
      
       koniec=1
-      }
-      if(tablica[0][0]==2 && tablica[1][1]==2 && tablica[2][2]==2){
+      } 
+       if(tablica[0][2]=="X" && tablica[1][1]=="X" && tablica[2][0]=="X"){
+     
+     koniec=1
+    }
+
+
+
+      if(tablica[0][0]=="O" && tablica[1][1]=="O" && tablica[2][2]=="O"){
       
       koniec=2
       }
-      if(tablica[0][2]==1 && tablica[1][1]==1 && tablica[2][0]==1){
-     
-     koniec=1
-     }
-     if(tablica[0][2]==2 && tablica[1][1]==2 && tablica[2][0]==2){
+    
+     if(tablica[0][2]=="O" && tablica[1][1]=="O" && tablica[2][0]=="O"){
      
      koniec=2
      }
@@ -273,30 +314,76 @@ function poprzecznie(){
    
    
    window.setInterval(function czy_koniec(){
-    if(koniec==1){
+  if(koniec==1){
   koniec=0
-  rysowanie=1
+  rysowanie=0
   
   document.getElementById("gracz").innerHTML="Wygrał Gracz X"
     }
     if(koniec==2){
   koniec=0
-  rysowanie=1
+  rysowanie=0
   document.getElementById("gracz").innerHTML="Wygrał Gracz O"
+    }
+    if(koniec==3){
+      koniec=0
+      rysowanie=0
+      document.getElementById("gracz").innerHTML="Remis"
     }
   },10)
 
 
+  function najlepszyRuch(){
 
-  function reset(){
-    var tablica=
-        [ [[0], [0],[0]],
-          [[0], [0],[0]],
-          [[0], [0],[0]] ];
-    
+      for(let i=0; i<3; i++){
+          for(let j=0; j<3; j++){
+
+            if(tablica[i][j] == "" && ruch_gracza==0){ 
+              tablica[i][j] = "O";
+             // let score = minimax(tablica);
+            
+              if(score > bestScore){
+                bestScore = score;
+                move ={i,j};
+              }
+            }
+          }
+      }
+tablica[move.i][move.j]="O"
+
 
 
   }
+  function minimax(tablica){
+    return 1;
+  }
+
+
+
+
+
+
+
+
+
+  function find(needle, haystack) {
+ 
+   var results=[];
+   dlugosc=3
+   var o=0
+   for(i=0;i<dlugosc;i++){
+ 
+    var idx = haystack[i].indexOf(needle);
+    while (idx != -1) {
+        results.push(idx);
+        idx = haystack[i].indexOf(needle, idx + 1);
+    }
+  }
+ 
+
+    return results;
+}
+  
     </script>
     </body>
     </html>
