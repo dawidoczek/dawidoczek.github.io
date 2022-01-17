@@ -1,0 +1,221 @@
+<html>
+<head>
+<meta charset="utf-8">
+
+<title>auto scroller</title>
+<style>
+#pole {
+
+background-color:green;
+border:1px solid black;
+}
+#assety img{
+padding:0;
+position:absolute;
+top:0;
+left:0;
+visibility:hidden;
+
+}
+#guzior{
+width:200px;
+height:200px;
+}
+
+
+</style>
+
+
+</head>
+<body>
+<div id="assety">
+<img src="rura_body.png" id="rura_body">
+<img src="rura_head2.png" id="rura_head">
+
+
+<img src="rura_head_upside_down(2).png" id="rura_head2">
+<img src="rura_body_reverse.png" id="rura_body2">
+<img src="up.png" id="plejsholder">
+
+
+
+</div>
+<input type="button" id="guzior"value="start" onclick="test()">
+
+
+
+<canvas id="pole" height=350px width=1000px>
+
+
+
+
+
+<script>
+spacja_klik=0 
+deg=0
+zy=0
+zx=0
+przysp=0
+				war=6
+				tablica=[]
+				kont=0
+				spadanie=0
+koniec=0
+vx=0
+dis=0
+var gora=0
+ilosc_przeszkod=6
+
+ const can = document.getElementById("pole")
+const ctx = can.getContext("2d");
+const rura_body= document.getElementById("rura_body")
+const rura_head= document.getElementById("rura_head")
+const rura_head2= document.getElementById("rura_head2")
+const rura_body2= document.getElementById("rura_body2")
+const ziomo= document.getElementById("plejsholder")
+
+
+
+
+
+
+
+window.addEventListener("keyup", function asasasa() {
+
+if (event.keyCode === 32) {
+spacja_klik=30
+
+
+}
+
+
+
+
+
+}
+)
+
+
+function test(){
+ctx.clearRect(0, 0, can.width, can.height);
+
+gora=0 
+dis=0
+
+for(j=0;j<ilosc_przeszkod;j++){
+gora=0
+if(koniec==0){
+losuj = Math.floor(Math.random()*5)+1
+tablica[j]=losuj
+}
+
+
+
+for(i=0;i<7;i++){
+	x_cord=200-vx+dis
+	if(x_cord>-60){
+if(i!=tablica[j] && gora==0){
+if(i+1==tablica[j]){
+
+
+ctx.drawImage(rura_head2, x_cord,(i*50))
+}
+else{
+ctx.drawImage(rura_body2, x_cord,i*50)				
+}
+}
+if(i!=tablica[j] && gora==1){
+
+if(i-1==tablica[j]){
+ctx.drawImage(rura_head, x_cord,(i*50)+18)
+
+} else{
+
+ctx.drawImage(rura_body, x_cord,i*50)
+}
+}
+if(i==tablica[j]){
+gora=1
+}
+	}
+}
+dis+=200
+
+}
+koniec =1
+
+if(1==2){
+ctx.save();
+ctx.translate(50, (can.height / 2)+spadanie+przysp);
+ctx.rotate(deg * Math.PI / 180);
+ctx.translate(-20,-20);
+ctx.drawImage(ziomo,0,0);
+ctx.restore();
+}
+
+
+}
+
+window.setInterval(function dupa(){
+vx+=1
+zx++
+if(zx>=200){
+	zx=0
+}
+if(spacja_klik==0){
+deg+=0.5
+
+spadanie++
+przysp++
+if(przysp>=20){
+przysp=20
+}
+if(deg>=45){
+	deg=45
+}
+}
+
+
+if(zx%250==0){
+
+tablica[war]=Math.floor(Math.random()*5)+1
+war++
+ilosc_przeszkod++
+}
+
+test()
+},10)
+// pamietaj zeby to naprawic, zeby to dzialalo jakos git ig
+
+window.setInterval(function gracz(){
+	if(spacja_klik!=0){
+spadanie--
+spacja_klik--
+przysp++
+deg--
+if(deg<=-45){
+	deg=-45
+}
+if(przysp<=20){
+przysp+=20
+}
+}
+
+
+
+if(spadanie>=165){
+	spadanie=165
+}
+
+},1)
+
+window.setInterval(function czas(){
+	console.log(ilosc_przeszkod)
+},100)
+
+
+</script>
+
+
+</body>
+</html>
