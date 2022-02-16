@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>
+            Kwiaciarna dawidex</title>
+        <link rel="stylesheet" href="style.css">
+        <body>
+            <div id="banner"><div id="w_bannerze"><img src="flower.gif" width="100vh"><img id="srodkowy" src="LOGO.gif" width="500vh" ><img src="flower.gif" width="100vh"></div></div>
+
+
+            <nav id="lista_rozwijana">
+                <a href="#" onclick="modyfikuj()">
+                    <img src="menu.png" width="50px"></img>
+            </a>
+            <div id="podstrony">
+              <a href="index.html">  <div>
+                   Oferta
+                </div></a>
+                <a href="gallery.html">  <div>
+                    Zdjecia
+                </div></a>
+                <a href="about.html"> <div>
+                   O nas
+                </div></a>
+                <a href="kontakt.html">
+                    <div id="brak">Kontakt</div>
+                </a>
+            </div>
+ 
+   
+</nav>
+<aside></aside>
+
+<main>
+Prosimy dzwonić na ten numer w kiedy jesteśmy otwarci, tzn 10-20 na tygodniu, 12-18 weekend. 
+Jezeli chcą państwo złożyć specjalne zamówienie, można na dole
+<form> 
+    <fieldset>
+        Imie&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<input type="text" id="dupa"> <br>
+        Nazwisko&emsp;&emsp;&emsp;&ensp;&nbsp;<input type="text"> <br>
+        email: &emsp;&emsp;&emsp;&emsp;&emsp;<input type="email"> <br>
+        Proszę opisac swoje zamówienie:<br> <textarea cols="35" rows="10"> </textarea><br>
+        <input type="button" value="wyślij" onclick="wszystko()">
+        <input type="reset">
+      
+    
+    
+</form>
+<div id="wyniki2"></div>
+</fieldset>
+</main>
+
+<script>
+    glowny=document.getElementsByTagName("main")
+    kontent=document.getElementById("wyniki2")
+    kontent.style="float:right;margin-top:-15%"
+    
+    function wszystko(){
+        str=[];
+    for(let i=1;i<5;i++){ 
+      
+    str[i]=document.forms[0][i].value;
+    
+    }
+  
+    
+  str1="Imie: "+str[1]+"<br>Nazwisko :"+str[2]+"<br>Email: "+str[3]+"<br> Zamówienie: "+str[4]+"<br> Powyższe zamówienie zostało przekazane do naszej bazy danych i oczekuje na wykonanie.";
+    document.getElementById("wyniki2").innerHTML=str1;
+}
+    </script>
+
+
+
+
+    <script src="zegarek.js"></script>
+    <script src="modyfikuj.js"></script>
+  
+    
+</body>
+</html>

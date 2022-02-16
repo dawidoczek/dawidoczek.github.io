@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>
+            Kwiaciarna dawidex</title>
+        <link rel="stylesheet" href="style.css">
+        <body>
+            <div id="banner"><div id="w_bannerze"><img src="flower.gif" width="100vh"><img id="srodkowy" src="LOGO.gif" width="500vh" ><img src="flower.gif" width="100vh"></div></div>
+
+
+            <nav id="lista_rozwijana">
+                <a href="#" onclick="modyfikuj()">
+                    <img src="menu.png" width="50px"></img>
+            </a>
+            <div id="podstrony">
+              <a href="index.html">  <div>
+                   Oferta
+                </div></a>
+                <a href="gallery.html">  <div>
+                    Zdjecia
+                </div></a>
+                <a href="about.html"> <div>
+                   O nas
+                </div></a>
+                <a href="kontakt.html">
+                    <div id="brak">Kontakt</div>
+                </a>
+            </div>
+ 
+   
+</nav>
+<aside></aside>
+
+<main>
+
+<table class="tg" style="table-layout: fixed;width: 100%;">
+    <colgroup>
+        <col style="width: 5%">
+        <col style="width: 15%">
+        <col style="width: 90%">
+        <col style="width: 8%">
+    </colgroup>
+    <thead>
+        <tr>
+            <th class="tg-0pky">Nazwa</th>
+            <th class="tg-0lax">Zdjecie</th>
+            <th class="tg-0lax">Opis</th>
+            <th class="tg-0lax">Cena</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td class="tg-0lax" name="tu_nazwa"></td>
+            <td class="tg-0lax" name="tu_zdj"></td>
+            <td class="tg-0lax">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean tristique</td>
+            <td class="tg-0lax" name="tu_x"></td>
+        </tr>
+        <tr>
+            <td class="tg-0lax" name="tu_nazwa"></td>
+            <td class="tg-0lax" name="tu_zdj"></td>
+            <td class="tg-0lax">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean tristique</td>
+            <td class="tg-0lax" name="tu_x"></td>
+        </tr>
+        <tr>
+            <td class="tg-0lax" name="tu_nazwa"></td>
+            <td class="tg-0lax" name="tu_zdj"></td>
+            <td class="tg-0lax">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean tristique</td>
+            <td class="tg-0lax" name="tu_x"></td>
+        </tr>
+        <tr>
+            <td class="tg-0lax" name="tu_nazwa"></td>
+            <td class="tg-0lax" name="tu_zdj"></td>
+            <td class="tg-0lax">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean tristique</td>
+            <td class="tg-0lax" name="tu_x"></td>
+        </tr>
+        <tr>
+            <td class="tg-0lax" name="tu_nazwa"></td>
+            <td class="tg-0lax" name="tu_zdj"></td>
+            <td class="tg-0lax">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean tristique</td>
+            <td class="tg-0lax" name="tu_x"></td>
+        </tr>
+        <tr>
+            <td class="tg-0lax" name="tu_nazwa"></td>
+            <td class="tg-0lax" name="tu_zdj"></td>
+            <td class="tg-0lax">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean tristique</td>
+            <td class="tg-0lax" name="tu_x"></td>
+        </tr>
+        <tr>
+            <td class="tg-0lax" name="tu_nazwa"></td>
+            <td class="tg-0lax" name="tu_zdj"></td>
+            <td class="tg-0lax">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean tristique</td>
+            <td class="tg-0lax" name="tu_x"></td>
+        </tr>
+        <tr>
+            <td class="tg-0lax" name="tu_nazwa"></td>
+            <td class="tg-0lax" name="tu_zdj"></td>
+            <td class="tg-0lax">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean tristique</td>
+            <td class="tg-0lax" name="tu_x"></td>
+        </tr>
+        <tr>
+            <td class="tg-0lax" name="tu_nazwa"></td>
+            <td class="tg-0lax" name="tu_zdj"></td>
+            <td class="tg-0lax">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean tristique</td>
+            <td class="tg-0lax" name="tu_x"></td>
+        </tr>
+    </tbody>
+</table>
+</main>
+<script>
+
+x = 0
+lista = document.querySelector("#podstrony")
+tabela = document.querySelector("main")
+aside = document.querySelector("aside")
+ostatni = document.getElementsByName("tu_x")
+obrazek = document.getElementsByName("tu_zdj")
+nazwa = document.getElementsByName("tu_nazwa")
+var img = [];
+
+nazwy_kwiatow = [
+    "Tęczowa róża",
+    "Tulipan Królowa nocy",
+    "Storczyk Phalaenopsis bellina",
+    "Goryczuszka Gentianella ciliata",
+    "Strongylodon macrobotrys",
+    "Cochliasanthus caracalla",
+    "Sarcodes sanguinea",
+    "Dereń kwiecisty",
+    "Przebiśnieg"
+]
+tabela.style="border:0px;"
+
+for (let index = 0; index < 9; index++) {
+    x = Math.floor(Math.random() * 9)
+
+    nazwa[index].innerHTML = nazwy_kwiatow[x]
+    img[index] = document.createElement("img")
+    img[index].src = x + ".jpg"
+    img[index].width = 150
+    obrazek[index].appendChild(img[index]);
+
+    
+}
+
+
+
+
+aside.style="height:1200px"
+window.setInterval(function wycena() {
+
+    for (let i = 0; i < ostatni.length; i++) {
+
+        ostatni[i].innerHTML = Math.round((x + i + 1) * Math.random() * 25)
+
+    }}, 300)
+    </script>
+
+    <script src="zegarek.js"></script>
+    <script src="modyfikuj.js"></script>
+
+
+</body>
+</html>

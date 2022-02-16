@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>
+            Kwiaciarna dawidex</title>
+        <link rel="stylesheet" href="style.css">
+        <body>
+            <div id="banner"><div id="w_bannerze"><img src="flower.gif" width="100vh"><img id="srodkowy" src="LOGO.gif" width="500vh" ><img src="flower.gif" width="100vh"></div></div>
+
+
+            <nav id="lista_rozwijana">
+                <a href="#" onclick="modyfikuj()">
+                    <img src="menu.png" width="50px"></img>
+            </a>
+            <div id="podstrony">
+              <a href="index.html">  <div>
+                   Oferta
+                </div></a>
+                <a href="gallery.html">  <div>
+                    Zdjecia
+                </div></a>
+                <a href="about.html"> <div>
+                   O nas
+                </div></a>
+                <a href="kontakt.html">
+                    <div id="brak">Kontakt</div>
+                </a>
+            </div>
+ 
+   
+</nav>
+<aside></aside>
+
+<main>
+O nas: 
+<div id="tutaj"></div>
+</main>
+<canvas id="canva_2"> </canvas>
+<script>
+      aside = document.querySelector("aside")
+    aside.style="height:900px"
+    var str=""
+let otutaj = document.querySelector("#tutaj")
+let wyrazy = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras a ultricies turpis. Nullam facilisis leo ac justo semper facilisis. Nulla imperdiet ante et gravida auctor. Donec in condimentum lectus. Pellentesque pulvinar tortor ac rutrum pretium. Sed rutrum molestie risus, in ultricies sem suscipit a. Etiam sed suscipit tellus. Pellentesque maximus lectus et purus accumsan, vel sodales risus hendrerit. Donec at facilisis arcu. Cras vitae purus vulputate, convallis sapien at, bibendum ipsum.Nullam non aliquam lacus. Curabitur interdum dolor eget lectus molestie ultrices. Sed sollicitudin vulputate eros ut sodales. Sed molestie venenatis lorem a viverra. Nunc in lobortis justo. Donec nec vulputate ex, eget ornare nibh. Aenean pretium nisi id nunc rhoncus, nec suscipit justo efficitur. In volutpat quam at nisi sollicitudin, in viverra augue hendrerit.Morbi tincidunt mi at odio egestas bibendum. Proin ultrices laoreet enim nec congue. Curabitur molestie nulla non lectus dignissim iaculis. Ut quam mauris, dignissim eget. '
+let lista_wyrazow= wyrazy.split(' ')
+window.setInterval(
+function losowanie(){
+    str=""
+for(let i=0;i<601;i++){
+    let losu=Math.floor(Math.random()*151)+1
+str+=lista_wyrazow[losu]+" "
+    
+}
+
+otutaj.innerHTML=str
+},3000)
+str=""
+for(let i=0;i<601;i++){
+    let losu=Math.floor(Math.random()*151)+1
+str+=lista_wyrazow[losu]+" "
+}
+otutaj.innerHTML=str
+
+
+    </script>
+
+
+
+
+    <script src="zegarek.js"></script>
+    <script src="modyfikuj.js"></script>
+    <script>  
+    x=0
+    y=0
+        dx = 1
+            dy = 1
+            i=0;
+        poprzedni=0
+            kolor = 'hsl(' + 360 * Math.random() + ',' + "100%," + "80%)"
+            img = document.createElement("img")
+            
+
+            window.setInterval(function () {
+                img.src = i + ".jpg"
+                x += dx
+                y += dy
+                if (y > can2.height - 50) {
+    
+                    dy = -1
+                i=Math.floor(Math.random()*8)+1
+                
+                }
+                if (y < 0) {
+                    dy = 1
+                    i=Math.floor(Math.random()*8)+1
+                }
+                if (x > can2.width - 50) {
+                    dx = -1
+                    i=Math.floor(Math.random()*8)+1
+                }
+                if (x < 0) {
+                    dx = 1
+                    i=Math.floor(Math.random()*8)+1
+                }
+               
+            }, 10)
+    
+    
+            const can2 = document.getElementById("canva_2")
+            
+    can2.style="float:left;width:90vw;height:52vh;margin-left:1vw;margin-top:26%;"
+            const ctx2 = can2.getContext("2d");
+    
+    
+            x = 0
+            y = 0
+           
+    
+            window.setInterval(function czas() {
+                ctx2.clearRect(0, 0, can2.width, can2.height)
+            
+          
+               
+                ctx2.drawImage(img,x,y,50,50)
+    
+    
+            }, 1000 / 60)</script>
+    
+</body>
+</html>

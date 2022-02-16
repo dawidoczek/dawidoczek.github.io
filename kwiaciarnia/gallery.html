@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>
+            Kwiaciarna dawidex</title>
+        <link rel="stylesheet" href="style.css">
+        <body>
+            <div id="banner"><div id="w_bannerze"><img src="flower.gif" width="100vh"><img id="srodkowy" src="LOGO.gif" width="500vh" ><img src="flower.gif" width="100vh"></div></div>
+
+            <nav id="lista_rozwijana">
+                <a href="#" onclick="modyfikuj()">
+                    <img src="menu.png" width="50px"></img>
+            </a>
+            <div id="podstrony">
+              <a href="index.html">  <div>
+                   Oferta
+                </div></a>
+                <a href="gallery.html">  <div>
+                    Zdjecia
+                </div></a>
+                <a href="about.html"> <div>
+                   O nas
+                </div></a>
+                <a href="kontakt.html">
+                    <div id="brak">Kontakt</div>
+                </a>
+            </div>
+ 
+   
+</nav>
+<aside></aside>
+
+<main>
+    <div id="wynik"></div>
+
+</main>
+<script>
+    tabela = document.querySelector("main")
+    var img =[]
+    wynik= document.querySelector("#wynik")
+    aside = document.querySelector("aside")
+    aside.style="height:900px"
+for (let index = 0; index < 9; index++) {
+    
+
+    
+    img[index] = document.createElement("img")
+    img[index].src = index + ".jpg"
+    img[index].width = 150
+    img[index].height = 150
+    img[index].id = "obrazek"+index
+
+    tabela.appendChild(img[index])
+}
+
+img=document.getElementsByTagName("img")
+img[4].addEventListener("click", function test(){
+    wynik.innerHTML="Tęczowe róże - idealne na każdą okazję dla każdego. Piękne żywe kolory odzwierciedlają witalność kwiatów. Jesli są prawidłowo zadbane, będą stać bardzo dlugi czas, nawet do miesiąca."
+    wynik.style="visibility:visible;"
+})
+img[5].addEventListener("click", function test(){
+    wynik.innerHTML="Tulipan Królowa nocy - idealny dla miłośników nocnych posiedzeń. Kwiat wielce szykowny i dodający wiele elegnacji do wnętrza. Nasiona sprowadzone z Niderlandów."
+    wynik.style="visibility:visible;"
+})
+img[6].addEventListener("click", function test(){
+    wynik.innerHTML="Storczyk Phalaenopsis bellina - piękna roślina rodem z lasów deszczowych. Kolorowy kwiat wniesie radość i życie do domu. Odpowiednio zadbany swym wdziękiem  oraz wyglądem może służyć długie lata."
+    wynik.style="visibility:visible;"
+})
+img[7].addEventListener("click", function test(){
+    wynik.innerHTML="Goryczuszka -pomimo swej nazwy przepięknie pachnie. Nie tylko zachwyca wyglądem, ale i właściwościami leczniczymi. Błękitny kolor wniesie piękną pogodę do domu w zachmurzone dni"
+    wynik.style="visibility:visible;"
+})
+img[8].addEventListener("click", function test(){
+    wynik.innerHTML="Strongylodon - nietypowa barwa kwiatu może kojarzyć się nie tylko z lazurowym morzem, ale i również z morsnymi jaskiniami lodowymi głęboko w sercu Syberii. Roślina idealna do domu, w którym brakuje egzotycznych kolorów."
+    wynik.style="visibility:visible;"
+})
+img[9].addEventListener("click", function test(){
+    wynik.innerHTML="Cochliasanthus caracalla - biało-fioletowe kwiaty pięknie oddadzą każda osobowość. Nie wywołując żadnych alergii i będąc prostą w obyciu, jest rośliną dla wszystkich."
+    wynik.style="visibility:visible;"
+})
+img[10].addEventListener("click", function test(){
+    wynik.innerHTML="Sarcodes sanguinea- intensywny róż kwiatu, czasem podchodzący pod czerwień, definitywnie wniesie życie i piękne barwy do domu. Dzięki prostej pielęgnacji może cieszyć oko przez naprawdę długi czas."
+    wynik.style="visibility:visible;"
+})
+img[11].addEventListener("click", function test(){
+    wynik.innerHTML="Dereń kwiecisty - duża roślina, o pięknych gałęziach i jeszcze piękniejszych kwiatach. Delikatne kolory oddadzą wrażliwość i czułość duszy."
+    wynik.style="visibility:visible;"
+})
+img[12].addEventListener("click", function test(){
+    wynik.innerHTML="Przebisniegi - idealne by przywitać wiosnę w swym domu. Śnieżnobiały kolor kontrastuje z intensywną zielenią łodygi, co oddaje przemianę zimy w wiosnę."
+    wynik.style="visibility:visible;"
+})
+
+    </script>
+
+
+
+
+    <script src="zegarek.js"></script>
+    <script src="modyfikuj.js"></script>
+    
+
+</body>
+</html>
