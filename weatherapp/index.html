@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="htaccess" href="access.htaccess">
+    <title>Pogoda</title>
+</head>
+<body>
+    <div id="white">
+        <div id="colorBackground">
+        </div>
+            <div id="colorBackground1">
+            </div>
+                <div id="colorBackground2_4">
+                </div>
+                    <div id="colorBackground5_8">
+                    </div>
+                            <content>
+                                <input type="text" placeholder="City" id="city">
+                                <input type="submit" value="Szukaj" id="search-button">
+                                <div id="weather">
+                                    <main>
+                                        <h2 id="city_name">Wybierz swoją lokalizację</h2>
+                                        <img src="images/drizzle.png" id="weather_icon">
+                                        <h4 id="ShortPhrase"></h4>
+                                        <h1 id="temp">Wybierz swoją lokalizację</h2>
+                                    </main>
+                                    <div id="details">
+                                        <div class="col">
+                                            <img src="images/wind.png" id="icon">
+                                            <div>
+                                                <p id="wind"></p>
+                                                <p>Prędkość wiatru</p>
+                                            </div>
+                                            
+                                        </div>
+                                        <div class="col">
+                                            <img src="images/direction1.png" id="direction_icon">
+                                            <div>
+                                                <p id="direction"></p>
+                                                <p>Kierunek wiatru</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </content>
+                        
+                    
+                
+            
+        
+    </div>
+    <script>
+        const city = document.querySelector("#city");
+        const search = document.querySelector("#search-button");
+        const apiKey = "pfhqdX6BTkR9c4KZC0iex31OtkKJMt1S";
+        const searchUrl = "http://dataservice.accuweather.com/locations/v1/cities/search";
+        const weatherApi = "http://dataservice.accuweather.com/forecasts/v1/daily/1day/";
+        
+        const temp = document.querySelector("#temp")
+        const city_name = document.querySelector("#city_name");
+        const wind = document.querySelector("#wind")
+        const direction = document.querySelector("#direction");
+        const direction_icon = document.querySelector("#direction_icon");
+        const content = document.querySelector('content');
+        const colorBackground = document.querySelector("#colorBackground");
+        
+
+
+// // USTAWIENIE KOLORU GRADIENTU
+        const colorBackground5_8 = document.querySelector("#colorBackground5_8")
+        const colorBackground2_4 = document.querySelector("#colorBackground2_4")
+
+        var kolorPoczatkowy = "#4466ff88";
+        var kolorKoncowy = "#f89";
+
+        function ustawKoloryTla() {
+            colorBackground.style.setProperty('--kolor-poczatkowy', kolorPoczatkowy);
+            colorBackground.style.setProperty('--kolor-koncowy', kolorKoncowy);
+        }
+        ustawKoloryTla();
+
+// SEARCH URL
+        search.addEventListener("click", async () => {
+            const url = `${searchUrl}?apikey=${apiKey}&q=${city.value}&language=pl-pl`;
+            const response = await fetch(url);
+            const data = await response.json();
+            console.log(data);
+            console.log(data[0].EnglishName);
+            var searched_city = data[0].EnglishName;
+            city_name.innerHTML=searched_city;
+            await pogoda(data);
+        })
+
+// WEATHER API
+        async function pogoda(dane) {
+            const url = `${weatherApi}${dane[0].Key}?apikey=${apiKey}&language=pl-pl&details=true&metric=true`
+            const response = await fetch(url);
+            const data = await response.json();
+            let shortPhrase = document.querySelector("#ShortPhrase");
+            let icon = document.querySelector("#weather_icon")
+
+
+            console.log(data.DailyForecasts[0]);
+            console.log(data.DailyForecasts[0].Day.Icon);
+            // console.log(data.DailyForecasts[0].Day.Wind.Direction.Localized);
+
+// USTAWIENIE GŁÓWNEJ IKONY POGODY
+            let lastBG = "colorBackground";
+            switch(data.DailyForecasts[0].Day.Icon){
+                case 1: {
+                    icon.src='images/clear.png';
+                    // content.style.backgroundColor='#fc7f03aa';
+                    // content.style.backgroundImage="linear-gradient(150deg, #fcc203aa,#fc7f03aa)";
+                }break;
+                case 2: case 3: case 4: {
+                    icon.src='images/partly-cloudy.png';
+                    // content.style.backgroundColor='#fcc203aa';
+                    // content.style.background="linear-gradient(150deg, #44ff8444, #239492ee)";
+                    colorBackground2_4.style.animation="visibility 1s linear alternate forwards";
+                    colorBackground5_8.style.animation="vanish 1s linear";
+                    // colorBackground5_8.classList.add("vanish");
+                    setTimeout(function(){
+                        kolorPoczatkowy = "#44ff8444";
+                        kolorKoncowy = "#239492ee";
+                        ustawKoloryTla();
+                        colorBackground5_8.classList.remove("vanish");
+                    },1500);
+                }break;
+                case 5: case 6: case 7: case 8:  {
+                    icon.src='images/cloud.png';
+
+                    colorBackground5_8.style.animation="visibility 1s linear alternate forwards";
+                    colorBackground2_4.style.animation="vanish 1s linear";
+                    // colorBackground2_4.classList.add("vanish");
+                    setTimeout(function(){
+                        kolorPoczatkowy = "#17ccc9";
+                        kolorKoncowy = "#759296";
+                        ustawKoloryTla();
+                        colorBackground2_4.classList.remove("vanish");
+                    },1500);
+                    
+                }break;
+                case 12: {
+                    icon.src='images/light-rain.png';
+
+                }break;
+                case 18: {
+                    icon.src='images/rain.png';
+
+                }break;
+            }
+
+
+// WYPISANIE WARTOŚCI POGODY
+            // content.style.animationDirection="reverse";
+            // content.style.animation="visibility 1s linear alternate backwards";
+            content.classList.add("vanish");
+            
+            temp.innerHTML=data.DailyForecasts[0].Temperature.Maximum.Value+" °C";
+            wind.innerHTML=data.DailyForecasts[0].Day.Wind.Speed.Value+" km/h";
+            direction_icon.style.rotate=data.DailyForecasts[0].Day.Wind.Direction.Degrees+180+`deg`;
+            direction.innerHTML=data.DailyForecasts[0].Day.Wind.Direction.Localized;
+            // direction.style=`rotate: data.DailyForecasts[0].Day.Wind.Direction.Degrees.Value deg`;
+            shortPhrase.innerHTML=data.DailyForecasts[0].Day.ShortPhrase;
+            console.log(data);
+
+            
+            setTimeout(function(){
+                content.classList.remove("vanish")
+            },1);
+        }
+        
+    </script>
+</body>
+</html>
